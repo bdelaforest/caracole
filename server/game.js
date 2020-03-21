@@ -174,7 +174,7 @@ const setCardToDiscardPile = (game, playerId, card) => {
     oldActions = oldActions.slice(1);
     // Get next player to pick
     const nextPlayer = Players.getNext(playersCollection, player);
-    nextActions = [{ playerId: nextPlayer.id, action: 'pick' }];
+    nextActions = [{ player: nextPlayer, action: 'pick' }];
   }
   // If not, that means a player throw his card not during his turn
   // so we remove the card from his hand
@@ -184,21 +184,21 @@ const setCardToDiscardPile = (game, playerId, card) => {
 
   // TODO: The order of Q matter? (if multiple player put a Q)
   if (cardToThrow.value === 'Q') {
-    nextActions = [{ playerId, action: 'watch' }, ...nextActions];
+    nextActions = [{ player, action: 'watch' }, ...nextActions];
   }
   if (cardToThrow.value === 'Joker') {
     // Create action to swipe a card
-    nextActions = [{ playerId, action: 'swap' }, ...nextActions];
+    nextActions = [{ player, action: 'swap' }, ...nextActions];
   }
   if (cardToThrow.value === 'J') {
     // Create action to swipe a card
-    nextActions = [{ playerId, action: 'exchange' }, ...nextActions];
+    nextActions = [{ player, action: 'exchange' }, ...nextActions];
   }
 
   // When player have to give a card to an other player
   // This action should be the next in the queue
   if (playerId !== card.playerId) {
-    nextActions = [{ playerId, action: 'give', playerIdToGiveTo: card.playerId }, ...nextActions];
+    nextActions = [{ player, action: 'give', playerIdToGiveTo: card.playerId }, ...nextActions];
   }
 
   return {
@@ -225,20 +225,20 @@ const setTmpCardToDiscardPile = (game, playerId) => {
   // Define action if the card is special
   // TODO: The order of Q matter? (if multiple player put a Q)
   if (tmpCard.value === 'Q') {
-    nextActions = [{ playerId, action: 'watch' }];
+    nextActions = [{ player, action: 'watch' }];
   }
   if (tmpCard.value === 'Joker') {
     // Create action to swipe a card
-    nextActions = [{ playerId, action: 'swap' }, ...nextActions];
+    nextActions = [{ player, action: 'swap' }, ...nextActions];
   }
   if (tmpCard.value === 'J') {
     // Create action to swipe a card
-    nextActions = [{ playerId, action: 'exchange' }, ...nextActions];
+    nextActions = [{ player, action: 'exchange' }, ...nextActions];
   }
 
   // Find next action
   const nextPlayer = Players.getNext(players, player);
-  nextActions = [...nextActions, { playerId: nextPlayer.id, action: 'pick' }];
+  nextActions = [...nextActions, { player: nextPlayer, action: 'pick' }];
 
   return {
     ...game,
@@ -269,7 +269,7 @@ const setPlayerHasDiscoveredHisCards = (game, playerId) => {
   if (shouldStart) {
     const dealer = Players.getDealer(players);
     const nextPlayer = Players.getNext(players, dealer);
-    nextActions = [{ playerId: nextPlayer.id, action: 'pick' }];
+    nextActions = [{ player: nextPlayer, action: 'pick' }];
   }
 
   return {
@@ -332,8 +332,8 @@ const setup = game => {
   const playersCollectionWithDealer = Players.setDealer(playersCollection);
 
   // Generate cards
-  const cards = Cards.getDeck(nbrOfPlayers > 2); // Joker only for 3+ players
   const nbrOfPlayers = Players.getCount(playersCollection);
+  const cards = Cards.getDeck(nbrOfPlayers > 2); // Joker only for 3+ players
   const nbrCardsPerPlayer = nbrOfPlayers > 5 ? 6 : 4;
   const nbrCardsForPlayers = nbrOfPlayers * nbrCardsPerPlayer;
   const deckOfCards =
