@@ -71,6 +71,7 @@ const Game = () => {
   return (
     <Column flex="1 0" padding="s3">
       <Column flex="1 0" justifyContent="space-between" spacing="s6">
+        {/* TODO spread other players around a circle*/}
         <Row justifyContent="space-around" spacing="s3">
           {otherPlayers.map((player, index) => renderPlayerDeck(player, index))}
         </Row>
