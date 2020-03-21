@@ -31,7 +31,7 @@ const PlayerCards = ({
             )}
           </Fragment>
         ) : (
-          <CardSpot label="No Card" />
+          <CardSpot key={cardIndex} label="No Card" />
         )
       )}
     </Row>
