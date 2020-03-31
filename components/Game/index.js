@@ -78,11 +78,11 @@ const Game = () => {
     <Column flex="1 0" padding="s3">
       <Column flex="1 0" justifyContent="space-between" spacing="s6">
         {/* TODO spread other players around a circle*/}
-        <Row justifyContent="space-around" spacing="s3">
+        <Row justifyContent="space-around" spacing="s3" style={{ height: '200px' }}>
           {otherPlayers.map((player, index) => renderPlayerDeck(player, index))}
         </Row>
 
-        <Card>
+        <Card style={{ height: '220px' }}>
           <Row justifyContent="space-between">
             <Column spacing="s3">
               <Subheading>Game name : {name}</Subheading>
@@ -125,7 +125,9 @@ const Game = () => {
           </Row>
         </Card>
 
-        <Row justifyContent="space-around">{renderPlayerDeck(selfPlayer)}</Row>
+        <Row justifyContent="space-around" style={{ height: '200px' }}>
+          {renderPlayerDeck(selfPlayer)}
+        </Row>
       </Column>
     </Column>
   );

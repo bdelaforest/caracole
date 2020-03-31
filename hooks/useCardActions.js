@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import io from 'socket.io-client';
 
 import useGame from './useGame';
+import usePlayingCardRefs from './usePlayingCardRefs';
 
 const socket = io();
 
@@ -9,6 +10,7 @@ const DISCOVERY_CARDS_COUNT = 2;
 
 const useCardActions = () => {
   const {
+    // discardedCardOriginNode,
     discoveredCardsCount,
     game,
     hideCard,
@@ -18,8 +20,10 @@ const useCardActions = () => {
     selectCard,
     selectedCards,
     selectedCardsCount,
+    // setDiscardedCardOriginNode,
     unfoldedCardsCount
   } = useGame();
+  // const { getPlayerCardNode, pickedCardRef } = usePlayingCardRefs();
   const { id: gameId, nextActions, isStarted } = game;
 
   const nextAction = nextActions.length && nextActions[0] && nextActions[0].action;
@@ -85,13 +89,18 @@ const useCardActions = () => {
   };
 
   const handleThrowTmpCard = () => {
+    // setDiscardedCardOriginNode(pickedCardRef.current);
     socket.emit('game.throwTmpCard', { gameId, playerId: selfId });
   };
 
   const handleThrowHandCard = (cardIndex, cardPlayerId) => {
     console.log('handleThrowHandCard', { cardIndex, cardPlayerId });
     const card = { index: cardIndex, playerId: cardPlayerId };
+    // setDiscardedCardOriginNode(getPlayerCardNode(cardPlayerId, cardIndex));
     socket.emit('game.throwCard', { gameId, playerId: selfId, card });
+    // setTimeout(() => {
+    //   setDiscardedCardOriginNode(null);
+    // }, 1000);
   };
 
   const handleWatchCard = (cardIndex, cardPlayerId) => {

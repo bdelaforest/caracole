@@ -106,7 +106,7 @@ const isCardCanBeThrown = (game, card) => {
   // Get the last card on the discardPile
   const lastCard = game.discardPile.slice(-1); // THIS CAN BE EMPTY !!
   const cardThrown = getCard(game, card);
-  return lastCard.length && cardThrown.value === lastCard[0].value;
+  return lastCard.length && cardThrown && cardThrown.value === lastCard[0].value;
 };
 
 const isDone = game => {

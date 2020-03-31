@@ -5,6 +5,7 @@ import io from 'socket.io-client';
 import { createGlobalStyle } from 'styled-components';
 
 import GameProvider from '../hooks/GameProvider';
+import { PlayingCardsRefsProvider } from '../hooks/usePlayingCardRefs';
 
 // Override global style to avoid Story height to be 100% of the screen height
 const GlobalStyle = createGlobalStyle`

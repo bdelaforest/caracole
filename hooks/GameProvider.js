@@ -1,5 +1,6 @@
 import { createContext, useState, useMemo } from 'react';
 
+import usePlayingCardRefs from './usePlayingCardRefs';
 import useSocket from './useSocket';
 
 export const GameContext = createContext(null);
@@ -9,6 +10,7 @@ const GameProvider = ({ children }) => {
   const [selfId, setSelfId] = useState(null);
   const [selectedCards, setSelectedCards] = useState({}); // { [playerId]: cardIndex }
   const [unfoldedCards, setUnfoldedCards] = useState({}); // { [playerId]: { [cardIndex]: boolean }}
+  const [discardedCardOrigin, setDiscardedCardOrigin] = useState(null); // { playerId, index }
 
   // Number of cards discovered by current user
   const discoveredCardsCount = useMemo(() => Object.keys(unfoldedCards[selfId] || {}).length, [
@@ -54,6 +56,10 @@ const GameProvider = ({ children }) => {
     });
   };
 
+  // const getCardId = () => {
+  //   return
+  // }
+
   const resetCards = () => {
     setSelectedCards({});
     setUnfoldedCards({});
@@ -77,6 +83,7 @@ const GameProvider = ({ children }) => {
   };
 
   const value = {
+    discardedCardOrigin,
     discoveredCardsCount,
     game,
     handleTriggerCaracole,
@@ -87,6 +94,7 @@ const GameProvider = ({ children }) => {
     selectedCards,
     selectedCardsCount,
     selfId,
+    setDiscardedCardOrigin,
     unfoldedCards,
     unfoldedCardsCount
   };

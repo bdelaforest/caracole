@@ -16,7 +16,7 @@ const LabelWrapper = styled(Column)`
   right: 0;
   /* compensate card padding */
   top: 1px;
-  bottom: 1px;
+  bottom: 3px;
   align-items: center;
   justify-content: center;
   padding: ${theme.spacing.s1};
