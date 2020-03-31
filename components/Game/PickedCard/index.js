@@ -1,14 +1,18 @@
 import React from 'react';
+
+import usePlayingCardRefs from '../../../hooks/usePlayingCardRefs';
 import { Column } from '../../layout';
-import { Subheading } from '../../text';
 import PlayingCard from '../../PlayingCard';
+import { Subheading } from '../../text';
 
 const PickedCard = ({ card, onClick }) => {
+  const { pickedCardRef } = usePlayingCardRefs();
+
   return (
     card && (
       <Column spacing="s2">
         <Subheading>Picked card</Subheading>
-        <PlayingCard card={card} onClick={onClick} />
+        <PlayingCard ref={pickedCardRef} card={card} onClick={onClick} />
       </Column>
     )
   );

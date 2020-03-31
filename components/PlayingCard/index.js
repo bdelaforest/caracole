@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import styled, { css } from 'styled-components';
 
 import theme from '../theme';
@@ -40,16 +40,16 @@ const StyledImg = styled.img`
     `};
 `;
 
-const PlayingCard = ({ card, isHidden, ...rest }) => {
+const PlayingCard = ({ card, isHidden, ...rest }, ref) => {
   if (isHidden) {
-    return <StyledImg {...rest} src={`/cards/${DECK_COLOR}_back.svg`} />;
+    return <StyledImg {...rest} ref={ref} src={`/cards/${DECK_COLOR}_back.svg`} />;
   }
 
   const { value, suit } = card;
   const suitLetter = SUIT_LETTER[suit];
   const cardId = value === 'Joker' ? 'joker' : `${value}${suitLetter}`;
 
-  return <StyledImg {...rest} src={`/cards/${cardId}.svg`} />;
+  return <StyledImg {...rest} ref={ref} src={`/cards/${cardId}.svg`} />;
 };
 
-export default PlayingCard;
+export default forwardRef(PlayingCard);

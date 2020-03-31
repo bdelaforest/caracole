@@ -50,9 +50,11 @@ class MyApp extends App {
     return (
       <>
         <GlobalStyle />
-        <GameProvider>
-          <Component {...pageProps} socket={this.state.socket} />
-        </GameProvider>
+        <PlayingCardsRefsProvider>
+          <GameProvider>
+            <Component {...pageProps} socket={this.state.socket} />
+          </GameProvider>
+        </PlayingCardsRefsProvider>
       </>
     );
   }
